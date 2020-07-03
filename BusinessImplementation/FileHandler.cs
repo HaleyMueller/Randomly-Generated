@@ -37,8 +37,10 @@ namespace BusinessImplementation
             this.Game = gameHandlerBLL.GetGame();
 
             //Create all necessary files
+            gameHandlerBLL.CreateGameFolder();
             modHandlerBLL.CreateModsFolder();
-
+            CreateDefaultFiles();
+            
             //Get File Lists
             var modsFileList = modHandlerBLL.LoadMods();
             var gameFileList = gameHandlerBLL.GetGameFileLists();
@@ -74,6 +76,28 @@ namespace BusinessImplementation
                 };
 
                 SaveGameFile(Game);
+            }
+        }
+
+        public static void CreateDefaultFiles()
+        {
+            var enums = Enum.GetValues(typeof(DataEntities.FileLists.FileList.FileTypes)).Cast<DataEntities.FileLists.FileList.FileTypes>().ToList();
+
+            foreach (var enumType in enums)
+            {
+                if (enumType == DataEntities.FileLists.FileList.FileTypes.Game)
+                    continue;
+
+                var path = Path.Combine(_FilesDirectory, GetFileNameFromFileType(enumType));
+
+                var defaultObject = GetClassFromFileType(enumType);
+
+                var defaultValues = Newtonsoft.Json.JsonConvert.SerializeObject(defaultObject.GetDefaultValues(), Newtonsoft.Json.Formatting.Indented);
+
+                using (StreamWriter sw = new StreamWriter(path))
+                {
+                    sw.Write(defaultValues);
+                }
             }
         }
 
@@ -120,6 +144,32 @@ namespace BusinessImplementation
                 case DataEntities.FileLists.FileList.FileTypes.Names:
                     ret = typeof(DataEntities.FileLists.NameFile);
                     break;
+                case DataEntities.FileLists.FileList.FileTypes.Genders:
+                    ret = typeof(DataEntities.FileLists.GenderFile);
+                    break;
+                case DataEntities.FileLists.FileList.FileTypes.Races:
+                    ret = typeof(DataEntities.FileLists.RaceFile);
+                    break;
+            }
+
+            return ret;
+        }
+
+        public static DataEntities.FileLists.FileList GetClassFromFileType(DataEntities.FileLists.FileList.FileTypes fileTypes)
+        {
+            DataEntities.FileLists.FileList ret = null;
+
+            switch (fileTypes)
+            {
+                case DataEntities.FileLists.FileList.FileTypes.Names:
+                    ret = new DataEntities.FileLists.NameFile();
+                    break;
+                case DataEntities.FileLists.FileList.FileTypes.Genders:
+                    ret = new DataEntities.FileLists.GenderFile();
+                    break;
+                case DataEntities.FileLists.FileList.FileTypes.Races:
+                    ret = new DataEntities.FileLists.RaceFile();
+                    break;
             }
 
             return ret;
@@ -133,6 +183,10 @@ namespace BusinessImplementation
                     return "game.json";
                 case DataEntities.FileLists.FileList.FileTypes.Names:
                     return "names.json";
+                case DataEntities.FileLists.FileList.FileTypes.Genders:
+                    return "genders.json";
+                case DataEntities.FileLists.FileList.FileTypes.Races:
+                    return "races.json";
             }
 
             return "ThisShouldntBeHere.txt";

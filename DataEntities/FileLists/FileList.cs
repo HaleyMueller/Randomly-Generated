@@ -15,10 +15,13 @@ namespace DataEntities.FileLists
         public enum FileTypes
         {
             Game,
-            Names
+            Names,
+            Genders,
+            Races
         }
 
         public abstract string GetValue();
         public abstract bool AllowedToAdd(Dictionary<string, object> options);
+        public abstract List<FileList> GetDefaultValues();
     }
 }

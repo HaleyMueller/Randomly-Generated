@@ -52,7 +52,14 @@ namespace BusinessImplementation
                         Optional = true
                     }
                 }
-            }
+            },
+            new Command()
+            {
+                Name = "CHARACTER",
+                Aliases = new List<string>() { "SELF", "PLAYER" },
+                Description = "Your player information",
+                Parameters = new List<Parameter>()
+            },
         };
 
         public Command GetCommand(string name)
@@ -243,6 +250,21 @@ namespace BusinessImplementation
                             };
                         }
                     }
+                    break;
+                case "CHARACTER":
+                    var msg = $"Name: {this.Game.Player.Name}" + Environment.NewLine +
+                              $"Age: {this.Game.Player.Age}" + Environment.NewLine +
+                              $"Gender: {this.Game.Player.GenderName}" + Environment.NewLine +
+                              $"Race: {this.Game.Player.Race.Name}" + Environment.NewLine +
+                              $"Job Title: {this.Game.Player.JobTitleName}";
+
+                    ret = new DataEntities.ReturnResult.Result()
+                    {
+                        IsError = false,
+                        ResultMessage = msg,
+                        ShowInUI = true,
+                        Status = DataEntities.ReturnResult.Statuses.Success
+                    };
                     break;
                 default:
                     ret = new DataEntities.ReturnResult.Result()

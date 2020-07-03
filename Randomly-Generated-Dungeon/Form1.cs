@@ -29,6 +29,9 @@ namespace Randomly_Generated_Dungeon
 
             ShowReturnResultInListBox(s);
 
+            richTextBox1.SelectionStart = richTextBox1.Text.Length;
+            richTextBox1.ScrollToCaret();
+
             textBox1.Text = "";
             textBox1.Focus();
         }
@@ -47,6 +50,21 @@ namespace Randomly_Generated_Dungeon
         private void ShowReturnResultInListBox(DataEntities.ReturnResult.Result result)
         {
             richTextBox1.AppendText(result.ResultMessage + Environment.NewLine, result.Color);
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GameHandler.SaveGame();
+        }
+
+        private void viewModsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var modFiles = GameHandler.GetModFiles();
+
+            ModList frm = new ModList(modFiles);
+            frm.Parent = this.ParentForm;
+            frm.TopMost = true;
+            frm.Show();
         }
     }
 

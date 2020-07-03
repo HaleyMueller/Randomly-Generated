@@ -26,7 +26,7 @@ namespace DataEntities.FileLists
 
             var gender = (DataEntities.Character.GenderEnum?)genderEnum;
 
-            if (this.Gender == gender)
+            if (this.Gender == gender || gender == Character.GenderEnum.Other)
             {
                 ret = true;
             }
@@ -37,6 +37,16 @@ namespace DataEntities.FileLists
         public override string GetValue()
         {
             return this.Name;
+        }
+
+        public override List<FileList> GetDefaultValues()
+        {
+            var ret = new List<FileList>();
+
+            ret.Add(new NameFile() { Name = "Bob", Gender = Character.GenderEnum.Male });
+            ret.Add(new NameFile() { Name = "Sara", Gender = Character.GenderEnum.Female });
+
+            return ret;
         }
     }
 }

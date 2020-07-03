@@ -25,6 +25,30 @@ namespace DungeonHandler
             //this.Game = BusinessImplementation.FileHandler.LoadGameFile();
         }
 
+        public DataEntities.ReturnResult SaveGame()
+        {
+            using (var fileHandlerBLL = new BusinessImplementation.FileHandler(this.Game))
+            {
+                fileHandlerBLL.SaveGameFile(this.Game);
+
+                return new DataEntities.ReturnResult()
+                {
+                    new DataEntities.ReturnResult.Result()
+                    {
+                         ResultMessage = "Successfully saved"
+                    }
+                };
+            }
+        }
+
+        public List<DataEntities.ModFile> GetModFiles()
+        {
+            using (var modHandlerBLL = new BusinessImplementation.ModHandler(this.Game))
+            {
+                return modHandlerBLL.GetAllMods();
+            }
+        }
+
         public DataEntities.ReturnResult GetLocation()
         {
             using (var locationBLL = new BusinessImplementation.Location(this.Game))

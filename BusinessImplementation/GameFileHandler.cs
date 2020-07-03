@@ -69,6 +69,20 @@ namespace BusinessImplementation
 
                 ret.AddRange(s);
             }
+            else if (decereal is List<DataEntities.FileLists.GenderFile>)
+            {
+                var s = (List<DataEntities.FileLists.GenderFile>)decereal;
+                s.ForEach(x => { x.FileName = "Game"; x.FileType = DataEntities.FileLists.FileList.FileTypes.Genders; });
+
+                ret.AddRange(s);
+            }
+            else if (decereal is List<DataEntities.FileLists.RaceFile>)
+            {
+                var s = (List<DataEntities.FileLists.RaceFile>)decereal;
+                s.ForEach(x => { x.FileName = "Game"; x.FileType = DataEntities.FileLists.FileList.FileTypes.Races; });
+
+                ret.AddRange(s);
+            }
 
             return ret;
         }

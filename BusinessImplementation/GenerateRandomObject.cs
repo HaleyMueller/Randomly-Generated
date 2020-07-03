@@ -13,9 +13,9 @@ namespace BusinessImplementation
 
         //Creates
 
-        public List<DataEntities.Race> CreateRaces(int howMany)
+        public List<DataEntities.FileLists.RaceFile> CreateRaces(int howMany)
         {
-            var ret = new List<DataEntities.Race>();
+            var ret = new List<DataEntities.FileLists.RaceFile>();
 
             for (int i = 0; i < howMany; i++)
             {
@@ -25,15 +25,9 @@ namespace BusinessImplementation
             return ret;
         }
 
-        public DataEntities.Race CreateRace()
+        public DataEntities.FileLists.RaceFile CreateRace()
         {
-            var ret = new DataEntities.Race(); //Change these to pull from file in one object
-
-            ret.Name = "Human";
-            ret.MaxAge = 100;
-            ret.AverageAgeBeforeDeath = 80;
-
-            return ret;
+            return (DataEntities.FileLists.RaceFile)BusinessImplementation.FileHandler.GetRandom(DataEntities.FileLists.FileList.FileTypes.Races, new Dictionary<string, object>() { });
         }
 
         //Gets
@@ -47,15 +41,16 @@ namespace BusinessImplementation
             if (gender == DataEntities.Character.GenderEnum.Other)
             {
                 //Get random gender name from file
-                genderOther = "Attack Helicopter";
+                var randomGender = (DataEntities.FileLists.GenderFile)BusinessImplementation.FileHandler.GetRandom(DataEntities.FileLists.FileList.FileTypes.Genders, new Dictionary<string, object>() { });
+                genderOther = randomGender.Gender;
             }
 
             var name = (DataEntities.FileLists.NameFile)BusinessImplementation.FileHandler.GetRandom(DataEntities.FileLists.FileList.FileTypes.Names, new Dictionary<string, object>() { { "Gender", gender } });
-            var age = GetAge();
+            var race = GetRace();
+            var age = GetAge(race);
             var jobTitle = GetJobTitle(false);
             var factionLevels = GetFactionLevels();
             var inventory = GetInventory(jobTitle);
-            var race = GetRace();
 
             ret = new DataEntities.Player()
             {
@@ -82,15 +77,16 @@ namespace BusinessImplementation
             if (gender == DataEntities.Character.GenderEnum.Other)
             {
                 //Get random gender name from file
-                genderOther = "Attack Helicopter";
+                var randomGender = (DataEntities.FileLists.GenderFile)BusinessImplementation.FileHandler.GetRandom(DataEntities.FileLists.FileList.FileTypes.Genders, new Dictionary<string, object>() { });
+                genderOther = randomGender.Gender;
             }
 
             var name = (DataEntities.FileLists.NameFile)BusinessImplementation.FileHandler.GetRandom(DataEntities.FileLists.FileList.FileTypes.Names, new Dictionary<string, object>() { { "Gender", gender } });
-            var age = GetAge();
+            var race = GetRace();
+            var age = GetAge(race);
             var jobTitle = GetJobTitle(false);
             var factionLevels = GetFactionLevels();
             var inventory = GetInventory(jobTitle);
-            var race = GetRace();
 
             ret = new DataEntities.Character()
             {
@@ -125,9 +121,9 @@ namespace BusinessImplementation
             return ret;
         }
 
-        public DataEntities.Race GetRace()
+        public DataEntities.FileLists.RaceFile GetRace()
         {
-            var ret = new DataEntities.Race();
+            var ret = new DataEntities.FileLists.RaceFile();
 
             Random rand = new Random();
             var i = rand.Next(0, this.Game.Races.Count);
@@ -214,10 +210,10 @@ namespace BusinessImplementation
         }
 
         //Do this based off race
-        public int GetAge()
+        public int GetAge(DataEntities.FileLists.RaceFile race)
         {
             Random rand = new Random();
-            var i = rand.Next(1, 100);
+            var i = rand.Next(1, race.MaxAge);
 
             return i;
         }

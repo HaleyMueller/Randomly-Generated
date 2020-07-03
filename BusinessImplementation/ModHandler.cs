@@ -79,6 +79,20 @@ namespace BusinessImplementation
 
                     ret.AddRange(s);
                 }
+                else if (decereal is List<DataEntities.FileLists.GenderFile>)
+                {
+                    var s = (List<DataEntities.FileLists.GenderFile>)decereal;
+                    s.ForEach(x => { x.FileName = modFile.Name; x.FileType = DataEntities.FileLists.FileList.FileTypes.Genders; });
+
+                    ret.AddRange(s);
+                }
+                else if (decereal is List<DataEntities.FileLists.RaceFile>)
+                {
+                    var s = (List<DataEntities.FileLists.RaceFile>)decereal;
+                    s.ForEach(x => { x.FileName = modFile.Name; x.FileType = DataEntities.FileLists.FileList.FileTypes.Races; });
+
+                    ret.AddRange(s);
+                }
             }
 
             return ret;
@@ -118,6 +132,31 @@ namespace BusinessImplementation
                 //mods.Add(mod);
 
                 ret.AddRange(GetModFileLists(mod));
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// This gets all of the mods in the mods folder
+        /// </summary>
+        public List<DataEntities.ModFile> GetAllMods()
+        {
+            var ret = new List<DataEntities.ModFile>();
+
+            //Get all mod folder paths
+            var modFolders = GetModFolders();
+
+            //Get mod for each mod folder and add to mod list
+            //var mods = new List<DataEntities.ModFile>();
+
+            foreach (var modFolder in modFolders)
+            {
+                var mod = GetMod(modFolder);
+
+                //mods.Add(mod);
+
+                ret.Add(mod);
             }
 
             return ret;
