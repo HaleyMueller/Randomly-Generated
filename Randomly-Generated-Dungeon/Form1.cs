@@ -54,7 +54,7 @@ namespace Randomly_Generated_Dungeon
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GameHandler.SaveGame();
+            ShowReturnResultInListBox(GameHandler.SaveGame());
         }
 
         private void viewModsToolStripMenuItem_Click(object sender, EventArgs e)

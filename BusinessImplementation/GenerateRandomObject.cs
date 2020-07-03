@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BusinessImplementation
@@ -13,9 +14,9 @@ namespace BusinessImplementation
 
         //Creates
 
-        public List<DataEntities.FileLists.RaceFile> CreateRaces(int howMany)
+        public List<DataEntities.Race> CreateRaces(int howMany)
         {
-            var ret = new List<DataEntities.FileLists.RaceFile>();
+            var ret = new List<DataEntities.Race>();
 
             for (int i = 0; i < howMany; i++)
             {
@@ -25,9 +26,27 @@ namespace BusinessImplementation
             return ret;
         }
 
-        public DataEntities.FileLists.RaceFile CreateRace()
+        public List<DataEntities.Race> CreateAllRaces()
         {
-            return (DataEntities.FileLists.RaceFile)BusinessImplementation.FileHandler.GetRandom(DataEntities.FileLists.FileList.FileTypes.Races, new Dictionary<string, object>() { });
+            var ret = new List<DataEntities.Race>();
+
+            foreach (var races in FileHandler._FileLists.Where(x => x.FileType == DataEntities.FileLists.FileList.FileTypes.Races))
+            {
+                var entity = ((DataEntities.FileLists.RaceFile)races).ConvertToEntity();
+
+                ret.Add(entity);
+            }
+
+            return ret;
+        }
+
+        public DataEntities.Race CreateRace()
+        {
+            var file = (DataEntities.FileLists.RaceFile)BusinessImplementation.FileHandler.GetRandom(DataEntities.FileLists.FileList.FileTypes.Races, new Dictionary<string, object>() { });
+
+            var entity = file.ConvertToEntity();
+
+            return entity;
         }
 
         //Gets
@@ -121,9 +140,9 @@ namespace BusinessImplementation
             return ret;
         }
 
-        public DataEntities.FileLists.RaceFile GetRace()
+        public DataEntities.Race GetRace()
         {
-            var ret = new DataEntities.FileLists.RaceFile();
+            var ret = new DataEntities.Race();
 
             Random rand = new Random();
             var i = rand.Next(0, this.Game.Races.Count);
@@ -210,7 +229,7 @@ namespace BusinessImplementation
         }
 
         //Do this based off race
-        public int GetAge(DataEntities.FileLists.RaceFile race)
+        public int GetAge(DataEntities.Race race)
         {
             Random rand = new Random();
             var i = rand.Next(1, race.MaxAge);

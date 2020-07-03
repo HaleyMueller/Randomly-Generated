@@ -53,7 +53,7 @@ namespace BusinessImplementation
             {
                 using (var generateRandomBLL = new BusinessImplementation.GenerateRandomObject(this.Game))
                 {
-                    this.Game.Races = generateRandomBLL.CreateRaces(1);
+                    this.Game.Races = generateRandomBLL.CreateAllRaces();
 
                     this.Game.Player = generateRandomBLL.GetPlayer();
                 }

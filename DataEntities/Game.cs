@@ -9,7 +9,7 @@ namespace DataEntities
     {
         public Player Player { get; set; } = new Player();
         public List<Faction> Factions { get; set; } = new List<Faction>();
-        public List<FileLists.RaceFile> Races { get; set; } = new List<FileLists.RaceFile>();
+        public List<Race> Races { get; set; } = new List<Race>();
     }
 
     public class Player : Character
@@ -56,7 +56,7 @@ namespace DataEntities
         public Character Mother { get; set; }
 
         public List<Character> Children { get; set; } = new List<Character>();
-        public FileLists.RaceFile Race { get; set; }
+        public Race Race { get; set; }
         public GenderEnum Gender { get; set; }
 
         public string GenderOther { get; set; }

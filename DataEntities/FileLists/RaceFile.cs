@@ -30,5 +30,16 @@ namespace DataEntities.FileLists
 
             return ret;
         }
+
+        public DataEntities.Race ConvertToEntity()
+        {
+            var ret = new DataEntities.Race();
+
+            ret.Name = this.Name;
+            ret.MaxAge = this.MaxAge;
+            ret.AverageAgeBeforeDeath = this.AverageAgeBeforeDeath;
+
+            return ret;
+        }
     }
 }
