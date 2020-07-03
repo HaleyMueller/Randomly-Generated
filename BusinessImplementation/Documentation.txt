@@ -1,0 +1,10 @@
+﻿# Documentation
+
+# How to add a new data file
+1. Add a new data entity class that inherits FileList (Look at NameFile)
+2. Update FileTypes enum in FileList data entity
+3. AllowedToAdd is used to see if the file applies to the options
+4. FileHandler: Add your type to GetTypeFromFileType
+5. FileHandler: Add file name to GetFileNameFromFileType
+6. GameFileHandler: Add type to GetGameFileLists
+7. ModFileHandler: Add type to GetModFileList

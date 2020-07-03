@@ -1,27 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataEntities
+namespace DataEntities.FileLists
 {
-    public abstract class FileList
-    {
-        [JsonIgnore]
-        public string FileName { get; set; }
-        [JsonIgnore]
-        public FileTypes FileType { get; set; }
-
-        public enum FileTypes
-        {
-            Game,
-            Names
-        }
-
-        public abstract string GetValue();
-        public abstract bool AllowedToAdd(Dictionary<string, object> options);
-    }
-
     public class NameFile : FileList
     {
         public DataEntities.Character.GenderEnum? Gender

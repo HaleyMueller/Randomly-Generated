@@ -43,9 +43,9 @@ namespace BusinessImplementation
             return ret;
         }
 
-        public List<DataEntities.FileList> GetGameFileList(DataEntities.FileList.FileTypes fileType)
+        public List<DataEntities.FileLists.FileList> GetGameFileList(DataEntities.FileLists.FileList.FileTypes fileType)
         {
-            List<DataEntities.FileList> ret = new List<DataEntities.FileList>();
+            List<DataEntities.FileLists.FileList> ret = new List<DataEntities.FileLists.FileList>();
 
             var fileName = FileHandler.GetFileNameFromFileType(fileType);
 
@@ -62,10 +62,10 @@ namespace BusinessImplementation
 
             var decereal = Newtonsoft.Json.JsonConvert.DeserializeObject(cereal, listType);
 
-            if (decereal is List<DataEntities.NameFile>)
+            if (decereal is List<DataEntities.FileLists.NameFile>)
             {
-                var s = (List<DataEntities.NameFile>)decereal;
-                s.ForEach(x => { x.FileName = "Game"; x.FileType = DataEntities.FileList.FileTypes.Names; });
+                var s = (List<DataEntities.FileLists.NameFile>)decereal;
+                s.ForEach(x => { x.FileName = "Game"; x.FileType = DataEntities.FileLists.FileList.FileTypes.Names; });
 
                 ret.AddRange(s);
             }
@@ -73,15 +73,15 @@ namespace BusinessImplementation
             return ret;
         }
 
-        public List<DataEntities.FileList> GetGameFileLists()
+        public List<DataEntities.FileLists.FileList> GetGameFileLists()
         {
-            List<DataEntities.FileList> ret = new List<DataEntities.FileList>();
+            List<DataEntities.FileLists.FileList> ret = new List<DataEntities.FileLists.FileList>();
 
-            var enums = Enum.GetValues(typeof(DataEntities.FileList.FileTypes)).Cast<DataEntities.FileList.FileTypes>().ToList();
+            var enums = Enum.GetValues(typeof(DataEntities.FileLists.FileList.FileTypes)).Cast<DataEntities.FileLists.FileList.FileTypes>().ToList();
 
             foreach (var enumObj in enums)
             {
-                if (enumObj != DataEntities.FileList.FileTypes.Game)
+                if (enumObj != DataEntities.FileLists.FileList.FileTypes.Game)
                     ret.AddRange(GetGameFileList(enumObj));
             }
 
@@ -90,7 +90,7 @@ namespace BusinessImplementation
 
         public static bool DoesSaveExist()
         {
-            return System.IO.File.Exists(Path.Combine(FileHandler._GameDirectory, FileHandler.GetFileNameFromFileType(DataEntities.FileList.FileTypes.Game)));
+            return System.IO.File.Exists(Path.Combine(FileHandler._GameDirectory, FileHandler.GetFileNameFromFileType(DataEntities.FileLists.FileList.FileTypes.Game)));
         }
     }
 }

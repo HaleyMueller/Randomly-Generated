@@ -50,7 +50,7 @@ namespace BusinessImplementation
                 genderOther = "Attack Helicopter";
             }
 
-            var name = (DataEntities.NameFile)BusinessImplementation.FileHandler.GetRandom(DataEntities.FileList.FileTypes.Names, new Dictionary<string, object>() { { "Gender", gender } });
+            var name = (DataEntities.FileLists.NameFile)BusinessImplementation.FileHandler.GetRandom(DataEntities.FileLists.FileList.FileTypes.Names, new Dictionary<string, object>() { { "Gender", gender } });
             var age = GetAge();
             var jobTitle = GetJobTitle(false);
             var factionLevels = GetFactionLevels();
@@ -85,7 +85,7 @@ namespace BusinessImplementation
                 genderOther = "Attack Helicopter";
             }
 
-            var name = (DataEntities.NameFile)BusinessImplementation.FileHandler.GetRandom(DataEntities.FileList.FileTypes.Names, new Dictionary<string, object>() { { "Gender", gender } });
+            var name = (DataEntities.FileLists.NameFile)BusinessImplementation.FileHandler.GetRandom(DataEntities.FileLists.FileList.FileTypes.Names, new Dictionary<string, object>() { { "Gender", gender } });
             var age = GetAge();
             var jobTitle = GetJobTitle(false);
             var factionLevels = GetFactionLevels();

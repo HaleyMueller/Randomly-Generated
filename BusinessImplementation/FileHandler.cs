@@ -8,7 +8,7 @@ namespace BusinessImplementation
 {
     public class FileHandler : GameBase
     {
-        public static List<DataEntities.FileList> _FileLists = new List<DataEntities.FileList>();
+        public static List<DataEntities.FileLists.FileList> _FileLists = new List<DataEntities.FileLists.FileList>();
 
         public static string _GamePath = "";
         public static string _GameDirectory = "";
@@ -77,11 +77,11 @@ namespace BusinessImplementation
             }
         }
 
-        public static DataEntities.FileList GetRandom(DataEntities.FileList.FileTypes fileTypes, Dictionary<string, object> options)
+        public static DataEntities.FileLists.FileList GetRandom(DataEntities.FileLists.FileList.FileTypes fileTypes, Dictionary<string, object> options)
         {
-            DataEntities.FileList ret = null;
+            DataEntities.FileLists.FileList ret = null;
 
-            var filesLookingFor = new List<DataEntities.FileList>();
+            var filesLookingFor = new List<DataEntities.FileLists.FileList>();
 
             var fileTypeType = GetTypeFromFileType(fileTypes);
 
@@ -111,76 +111,32 @@ namespace BusinessImplementation
             return ret;
         }
 
-        public static System.Type GetTypeFromFileType(DataEntities.FileList.FileTypes fileTypes)
+        public static System.Type GetTypeFromFileType(DataEntities.FileLists.FileList.FileTypes fileTypes)
         {
             System.Type ret = null;
 
             switch (fileTypes)
             {
-                case DataEntities.FileList.FileTypes.Names:
-                    ret = typeof(DataEntities.NameFile);
+                case DataEntities.FileLists.FileList.FileTypes.Names:
+                    ret = typeof(DataEntities.FileLists.NameFile);
                     break;
             }
 
             return ret;
         }
 
-        public static string GetFileNameFromFileType(DataEntities.FileList.FileTypes fileTypes)
+        public static string GetFileNameFromFileType(DataEntities.FileLists.FileList.FileTypes fileTypes)
         {
             switch (fileTypes)
             {
-                case DataEntities.FileList.FileTypes.Game:
+                case DataEntities.FileLists.FileList.FileTypes.Game:
                     return "game.json";
-                case DataEntities.FileList.FileTypes.Names:
+                case DataEntities.FileLists.FileList.FileTypes.Names:
                     return "names.json";
             }
 
             return "ThisShouldntBeHere.txt";
         }
-
-        //public static string ReadFromFile(string fileName, FileTypes? fileTypes)
-        //{
-        //    string path = System.IO.Path.Combine(GamePath, fileName);
-
-        //    if (!System.IO.File.Exists(path))
-        //    {
-        //        CreateDefaultFile(path, fileTypes);
-        //    }
-
-        //    return System.IO.File.ReadAllText(path);
-        //}
-
-        ////Hits everytime the game loads
-        //private static void CreateDefaultFile(string path, FileTypes? fileTypes)
-        //{
-        //    string fileContents = null;
-
-        //    switch (fileTypes)
-        //    {
-        //        case FileTypes.RandomNames:
-        //            //fileContents = RandomHandler.MergeRandom(RandomHandler.RandomTypes.Name);
-        //            break;
-        //    }
-
-        //    using (System.IO.StreamWriter sw = new System.IO.StreamWriter(path, false))
-        //    {
-        //        sw.Write(fileContents);
-        //    }
-        //}
-
-
-
-        //public static DataEntities.Game LoadGameFile()
-        //{
-        //    string fileContents = "";
-
-        //    using (System.IO.StreamReader sw = new System.IO.StreamReader(System.IO.Path.Combine(GamePath, GetFileNameFromFileType(DataEntities.FileList.FileTypes.Game))))
-        //    {
-        //        fileContents = sw.ReadToEnd();
-        //    }
-
-        //    return Newtonsoft.Json.JsonConvert.DeserializeObject<DataEntities.Game>(fileContents);
-        //}
 
         public void SaveGameFile(DataEntities.Game game)
         {
@@ -188,7 +144,7 @@ namespace BusinessImplementation
 
             fileContents = Newtonsoft.Json.JsonConvert.SerializeObject(game, Newtonsoft.Json.Formatting.Indented);
 
-            var path = System.IO.Path.Combine(_GameDirectory, GetFileNameFromFileType(DataEntities.FileList.FileTypes.Game));
+            var path = System.IO.Path.Combine(_GameDirectory, GetFileNameFromFileType(DataEntities.FileLists.FileList.FileTypes.Game));
 
             var gameFileHander = new BusinessImplementation.GameFileHandler(this.Game);
             gameFileHander.CreateGameFolder();
@@ -206,24 +162,5 @@ namespace BusinessImplementation
                 sw.Write(fileContents);
             }
         }
-
-        //public static void CreateFile(string path)
-        //{
-        //    if (!System.IO.File.Exists(path))
-        //    {
-        //        using (System.IO.StreamWriter sw = new System.IO.StreamWriter(path))
-        //        {
-        //            sw.Write("");
-        //        }
-        //    }
-        //}
-
-        //public static void UpdateFile(string path, string fileContents, bool append)
-        //{
-        //    using (System.IO.StreamWriter sw = new System.IO.StreamWriter(path, append))
-        //    {
-        //        sw.Write(fileContents);
-        //    }
-        //}
     }
 }

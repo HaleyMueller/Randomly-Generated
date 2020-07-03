@@ -52,9 +52,9 @@ namespace BusinessImplementation
             return ret;
         }
 
-        public List<DataEntities.FileList> GetModFileList(DataEntities.ModFile modFile, DataEntities.FileList.FileTypes fileType)
+        public List<DataEntities.FileLists.FileList> GetModFileList(DataEntities.ModFile modFile, DataEntities.FileLists.FileList.FileTypes fileType)
         {
-            List<DataEntities.FileList> ret = new List<DataEntities.FileList>();
+            List<DataEntities.FileLists.FileList> ret = new List<DataEntities.FileLists.FileList>();
 
             var fileName = FileHandler.GetFileNameFromFileType(fileType);
 
@@ -72,10 +72,10 @@ namespace BusinessImplementation
 
                 var decereal = Newtonsoft.Json.JsonConvert.DeserializeObject(cereal, listType);
 
-                if (decereal is List<DataEntities.NameFile>)
+                if (decereal is List<DataEntities.FileLists.NameFile>)
                 {
-                    var s = (List<DataEntities.NameFile>)decereal;
-                    s.ForEach(x => { x.FileName = modFile.Name; x.FileType = DataEntities.FileList.FileTypes.Names; });
+                    var s = (List<DataEntities.FileLists.NameFile>)decereal;
+                    s.ForEach(x => { x.FileName = modFile.Name; x.FileType = DataEntities.FileLists.FileList.FileTypes.Names; });
 
                     ret.AddRange(s);
                 }
@@ -84,11 +84,11 @@ namespace BusinessImplementation
             return ret;
         }
 
-        public List<DataEntities.FileList> GetModFileLists(DataEntities.ModFile modFile)
+        public List<DataEntities.FileLists.FileList> GetModFileLists(DataEntities.ModFile modFile)
         {
-            List<DataEntities.FileList> ret = new List<DataEntities.FileList>();
+            List<DataEntities.FileLists.FileList> ret = new List<DataEntities.FileLists.FileList>();
 
-            var enums = Enum.GetValues(typeof(DataEntities.FileList.FileTypes)).Cast<DataEntities.FileList.FileTypes>().ToList();
+            var enums = Enum.GetValues(typeof(DataEntities.FileLists.FileList.FileTypes)).Cast<DataEntities.FileLists.FileList.FileTypes>().ToList();
 
             foreach (var enumObj in enums)
             {
@@ -101,9 +101,9 @@ namespace BusinessImplementation
         /// <summary>
         /// This loads all of the mods in the mods folder
         /// </summary>
-        public List<DataEntities.FileList> LoadMods()
+        public List<DataEntities.FileLists.FileList> LoadMods()
         {
-            var ret = new List<DataEntities.FileList>();
+            var ret = new List<DataEntities.FileLists.FileList>();
 
             //Get all mod folder paths
             var modFolders = GetModFolders();
